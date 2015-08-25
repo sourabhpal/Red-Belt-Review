@@ -14,35 +14,33 @@
     <div class="row">
       <div class="col-md-12">
          <?php 
-          if ($this->session->userdata('success'))
+          if ($this->session->flashdata('success'))
           {
             ?>
             <div class="alert alert-success">
               <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
               <strong>Nice!</strong>
               <?php 
-              foreach($this->session->userdata('success') as $s){
+              foreach($this->session->flashdata('success') as $s){
                 echo $s;
               }
               ?>
             </div>
             <?php
-            $this->session->unset_userdata('success');
           }
-          if ($this->session->userdata('errors'))
+          if ($this->session->flashdata('errors'))
           {
             ?>
             <div class="alert alert-danger">
               <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
               <strong>Error!</strong>
               <?php 
-              foreach($this->session->userdata('errors') as $error){
+              foreach($this->session->flashdata('errors') as $error){
                 echo $error;
               }
               ?>
             </div>
             <?php
-            $this->session->unset_userdata('errors');
           }
           ?>
       </div>
@@ -51,7 +49,7 @@
       <h1>Welcome!</h1>
       <h3>Register!</h3>
       <div class="col-md-5">
-        <form class='form-horizontal' role='form' action='/main/register_action' method='post'>
+        <form class='form-horizontal' role='form' action='/users/register_action' method='post'>
           
           <div class="form-group">
             <label>Full Name: </label>
@@ -84,7 +82,7 @@
       <div class="col-md-2"></div>
       <div class="col-md-5" id="right">
         <h3>Login!</h3>
-        <form class="form-vertical" role='form' action='/main/signin_action' method='post'>
+        <form class="form-vertical" role='form' action='/users/signin_action' method='post'>
           <div class="form-group">
             <label>Email Address: </label>
             <input type="email" class="form-control" name="email" required>

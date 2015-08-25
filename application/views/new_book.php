@@ -1,16 +1,24 @@
 <html>
 <head>
   <meta charset="UTF-8">
-  <title>Books and Reviews</title>
+  <title>Add a New Book</title>
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
   <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
-  <style>
-  </style>
   <link rel="stylesheet" type="text/css" href="/assets/style.css">
-  <script type="text/javascript">
-  </script>
+  <script type="text/javascript"></script>
+  <style>
+	.form {
+		width: 600px;
+	}
+	h3 {
+		text-align: center;
+	}
+	p {
+		display: inline-block;
+	}
+  </style>
 </head>
 <body>
 	<div class="main-container">
@@ -29,7 +37,7 @@
 		      <ul class="nav navbar-nav navbar-right">
 		        <?php 
 		          if($this->session->userdata('LoggedIn')){
-		            echo "<li><a href='/books/add_book'><span class='glyphicon glyphicon-plus'></span> Add Book and Review</a></li>";
+		            echo "<li><a href='/books'><span class='glyphicon glyphicon-home'></span> Home</a></li>";
 		            echo "<li><a href='/users/logoff'>Logoff <span class='glyphicon glyphicon-log-out'></span></a></li>";
 		          }
 		         ?>
@@ -73,40 +81,47 @@
 		      ?>
       		</div>
       		<div class="row">
-      			<div class="col-md-6">
-      				<h2><em><u>Recent Book Reviews</u></em></h2>
-      			<?php
-      			// var_dump($top_books);
-      				foreach ($top_books as $top_book)
-      				{
-      					
-      					echo "<h3>Title: <a href='/books/show/{$top_book['id']}'>". $top_book['title'] ."</a><br></h3>";
-      					echo "<h4>Author: ". $top_book['name'] ."<br></h4>";
-      					for ($i = 0; $i < $top_book['rating']; $i++)
-      					{
-      						echo "<img src='/assets/star.png' height='25' width='25'>";
-      					}
-      					$star = 5 - $top_book['rating'];
-      					for ($i = 0; $i < $star; $i++)
-      					{
-      						echo "<img src='/assets/blank.png' height='25' width='25'>";
-      					}
-      					echo "<br><h5>Review: ". $top_book['review'] ."<br></h5>";
-      					echo "<h6>Posted on: ". $top_book['created_at'] ."<br></h6>";
-      					echo "<br>";
-      				}
-      			?>
-      			</div>
-      			<div class="col-md-6" id="scroll">
-      				<h2><em><u>Other Books With Reviews</u></em></h2>
-      				<?php
-  					foreach ($remaining_books as $remaining_book)
-  					{
-  						echo "<a href='/books/show/{$remaining_book['id']}'><h4>". $remaining_book['title'] ."<br></h4></a>";
-  						echo "<br>";
-  					}
-      				?>
-      			</div>
+      			<div class="container form">
+      				<h3>Add a New Book and Review!</h3>
+      			<form class='form-horizontal' role='form' action='/books/new_action' method='post'>
+		          <div class="form-group">
+		            <label>Book Title: </label>
+		            <input type="text" class="form-control" name="name" required>
+		          </div>
+		          <div class="form-group">
+		            <label>Author: </label>
+		            <select class="form-control" name="author">
+		            	<option disable selected>Please select an author</option>
+		            	<?php
+		            		foreach ($authors as $author)
+		            		{
+		            			echo "<option value='{$author['name']}'>{$author['name']}</option>";
+		            		}
+		            	?>
+		            </select>
+		            <label>Or Add a new Author: </label>
+		            <input type="text" class="form-control" name="name" required>
+		          </div>
+		          <div class="form-group">
+		            <label>Review: </label>
+		            <input type="text" class="form-control" name="review" required>
+		          </div>
+		          <div class="form-group">
+		            <label>Rating: </label>
+		            <select name="rating">
+		            	<option value="1">1</option>
+		            	<option value="2">2</option>
+		            	<option value="3">3</option>
+		            	<option value="4">4</option>
+		            	<option value="5">5</option>
+		            </select>
+		            <p>stars</p>
+		          </div>
+		          <div class="form-group">
+		            <button type="submit" class="btn btn-lg btn-primary pull-right">Add Book and Review</button>
+		          </div>
+		        </form>
+		        </div>
       		</div>
 		</div>
 	</div>

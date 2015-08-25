@@ -18,6 +18,30 @@ USE `redbelt`;
 /*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
 
 --
+-- Table structure for table `authors`
+--
+
+DROP TABLE IF EXISTS `authors`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `authors` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `name` varchar(45) DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `authors`
+--
+
+LOCK TABLES `authors` WRITE;
+/*!40000 ALTER TABLE `authors` DISABLE KEYS */;
+INSERT INTO `authors` VALUES (1,'JK Rowling'),(2,'Eoin Colfer'),(3,'Orson Scott Card'),(4,'George RR Martin');
+/*!40000 ALTER TABLE `authors` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
 -- Table structure for table `books`
 --
 
@@ -27,9 +51,11 @@ DROP TABLE IF EXISTS `books`;
 CREATE TABLE `books` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `title` varchar(255) DEFAULT NULL,
-  `author` varchar(255) DEFAULT NULL,
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=utf8;
+  `author_id` int(11) NOT NULL,
+  PRIMARY KEY (`id`),
+  KEY `fk_books_authors1_idx` (`author_id`),
+  CONSTRAINT `fk_books_authors1` FOREIGN KEY (`author_id`) REFERENCES `authors` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -38,7 +64,6 @@ CREATE TABLE `books` (
 
 LOCK TABLES `books` WRITE;
 /*!40000 ALTER TABLE `books` DISABLE KEYS */;
-INSERT INTO `books` VALUES (1,'Artemis Fowl','Eoin Colfer'),(2,'Enders Game','Orson Scott Card'),(3,'Harry Potter and the Sorcerer\'s Stone','JK Rowling'),(4,'A Song of Fire and Dance','George RR Martin'),(5,'How to be a Bosss','Sourabh Pal'),(6,'Harry Potter and the Chamber of Secrets','JK Rowling'),(7,'Artmeris Fowl and the Arctic Incident','Eoin Colfer'),(8,'How to Fake Your Death','Sourabh Pal');
 /*!40000 ALTER TABLE `books` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -51,7 +76,7 @@ DROP TABLE IF EXISTS `reviews`;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `reviews` (
   `id` int(11) NOT NULL,
-  `rating` float DEFAULT NULL,
+  `rating` smallint(6) DEFAULT NULL,
   `review` text,
   `created_at` datetime DEFAULT NULL,
   `book_id` int(11) NOT NULL,
@@ -70,7 +95,6 @@ CREATE TABLE `reviews` (
 
 LOCK TABLES `reviews` WRITE;
 /*!40000 ALTER TABLE `reviews` DISABLE KEYS */;
-INSERT INTO `reviews` VALUES (1,5,'This is a great fantasy book.','2015-08-25 08:39:46',1,1),(2,4.5,'Great space adventure','2015-08-25 08:50:03',2,1),(3,5,'Great start to a great series','2015-08-25 08:50:03',3,1);
 /*!40000 ALTER TABLE `reviews` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -89,7 +113,7 @@ CREATE TABLE `users` (
   `password` varchar(255) DEFAULT NULL,
   `created_at` datetime DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -98,7 +122,7 @@ CREATE TABLE `users` (
 
 LOCK TABLES `users` WRITE;
 /*!40000 ALTER TABLE `users` DISABLE KEYS */;
-INSERT INTO `users` VALUES (1,'Sourabh Pal','sourabhp203','sourabh@pal-tech.co','password','2015-08-25 08:37:11');
+INSERT INTO `users` VALUES (1,'Sourabh Pal','sourabhp','sourabh@pal-tech.co','265e7307f55128547875ceec2d415db1','2015-08-25 09:54:33'),(2,'Raymon Oleaga','rayray','ray@designbuddy.com','664440b7e3cbb43132867ac382b81e9f','2015-08-25 10:04:14');
 /*!40000 ALTER TABLE `users` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
@@ -111,4 +135,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2015-08-25  8:52:40
+-- Dump completed on 2015-08-25 10:10:27

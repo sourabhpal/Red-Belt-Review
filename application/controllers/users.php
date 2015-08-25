@@ -1,6 +1,6 @@
 <?php if ( ! defined('BASEPATH')) exit('No direct script access allowed');
 
-class Main extends CI_Controller {
+class Users extends CI_Controller {
 
 	public function __construct()
 	{
@@ -22,13 +22,13 @@ class Main extends CI_Controller {
 			$this->session->set_userdata('current_user_id', $user['id']);
 			$this->session->set_userdata('name', $user['name']);
 			$success[] = 'Login successful!';
-			$this->session->set_userdata('success', $success);
+			$this->session->set_flashdata('success', $success);
 			redirect('/books');
 		}
 		else
 		{
 			$error[] = 'No matching record found!';
-			$this->session->set_userdata('errors', $error);
+			$this->session->set_flashdata('errors', $error);
 			$this->index();
 		}
 	}
@@ -38,15 +38,21 @@ class Main extends CI_Controller {
 		$result = $this->User->validate($this->input->post());
 		if($result == "valid") {
 			$success[] = 'Registration successful!';
-			$this->session->set_userdata('success', $success);
+			$this->session->set_flashdata('success', $success);
 			$this->User->add_user($this->input->post());
 			redirect("/");
 		} 
 		else {
 			$errors = array(validation_errors());
-			$this->session->set_userdata('errors', $errors);
+			$this->session->set_flashdata('errors', $errors);
 			$this->index();
 		}
+	}
+
+	public function logoff()
+	{
+		$this->session->sess_destroy();
+		redirect('/');
 	}
 
 }
