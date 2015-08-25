@@ -1,0 +1,17 @@
+.container {
+	margin: 0 auto;
+}
+
+.col-md-5 {
+	margin: 10px auto;
+	vertical-align: middle;
+}
+
+h1 {
+	margin: 10px auto;
+	text-align: center;
+}
+
+.col-md-12 {
+	text-align: center;
+}
